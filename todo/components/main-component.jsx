@@ -6,8 +6,22 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
+import { useState } from "react"
+import { addAtask } from "@/Backend/Api"
 
-export function MainComponent() {
+export function MainComponent({tasks}) {
+
+  const [task, setTask] = useState('')
+  const handletaskchange = (event) => {
+    setTask(event.target.value)
+    console.log(task)
+  }
+  const handletaskadd = (event) => {
+    event.preventDefault()
+    addAtask(task)
+    console.log(task)
+  }
+
   return (
     (<div
       className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -21,48 +35,33 @@ export function MainComponent() {
       <main className="w-full max-w-md mx-auto">
         <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
           <form className="space-y-4">
-            <Input className="w-full" id="new-task" placeholder="Add a new task" type="text" />
-            <Button className="w-full" type="submit">
+            <Input onChange={
+              event => handletaskchange(event)
+            }className="w-full" id="new-task" placeholder="Add a new task" type="text"/>
+            <Button className="w-full" type="submit" onClick={
+             event => handletaskadd(event)
+            }>
               Add Task
             </Button>
           </form>
           <ul className="mt-4 space-y-4">
-            <li className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Checkbox id="task-1" />
-                <Label className="text-gray-900 dark:text-gray-100" htmlFor="task-1">
-                  Buy groceries
-                </Label>
-              </div>
-              <Button size="icon" variant="outline">
-                <TrashIcon className="h-4 w-4" />
-                <span className="sr-only">Delete task</span>
-              </Button>
-            </li>
-            <li className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Checkbox id="task-2" />
-                <Label className="text-gray-900 dark:text-gray-100" htmlFor="task-2">
-                  Finish project
-                </Label>
-              </div>
-              <Button size="icon" variant="outline">
-                <TrashIcon className="h-4 w-4" />
-                <span className="sr-only">Delete task</span>
-              </Button>
-            </li>
-            <li className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Checkbox id="task-3" />
-                <Label className="text-gray-900 dark:text-gray-100" htmlFor="task-3">
-                  Read a book
-                </Label>
-              </div>
-              <Button size="icon" variant="outline">
-                <TrashIcon className="h-4 w-4" />
-                <span className="sr-only">Delete task</span>
-              </Button>
-            </li>
+          {
+            
+              tasks.map((task,index) => (
+              <li
+                key={index}
+                className="flex items-center justify-between">
+                <Checkbox id={`task-${index}`} />
+                <Label htmlFor={`task-${index}`}>{task[1]}</Label>
+                <Button variant="icon">
+                  <TrashIcon />
+                </Button>
+              </li>
+              
+              ))
+            
+          }
+
           </ul>
           <Button className="w-full mt-6" variant="outline">
             Clear All

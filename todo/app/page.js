@@ -17,7 +17,7 @@ export default function Home() {
             const signer = provider.getSigner();
             const address = await (await signer).getAddress();
             const contractinstance = await new ethers.Contract(contractAddress,abi,provider);
-            const task = await contractinstance.getallTasks();
+            const task = await contractinstance.getAllTasks();
             setTasks(task);
             console.log(task[0][2]);
           }
@@ -34,18 +34,10 @@ export default function Home() {
       connecttometamask();
     }
   ),[];
+
   return (
     <main>
-     {
-      tasks.map((task) => {
-        return (
-          <div key={task[0]}>
-            <p>{task[1]}</p>
-            <p>{task[2]}</p>
-          </div>
-        );
-      })
-     }
+     <MainComponent tasks={tasks} />
     </main>
   );
 }

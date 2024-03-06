@@ -1,20 +1,13 @@
 const apiurl = 'https://data-seed-prebsc-1-s1.binance.org:8545';
-const contractAddress = '0xDF8f6F00a63F9896A2878D4ae7e8eaCBDdd7a118';
+const contractAddress = '0x23C8a2839E8048465E962698E1586dca277e4B59';
 const privateKey = 'ade18909943d7066909da3431a8c6361c5ada2c99bd897f6672ae6278691d536';
 
 const abi = [
 	{
-		"inputs": [],
-		"name": "clearAllTasks",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "string",
-				"name": "_content",
+				"name": "content",
 				"type": "string"
 			}
 		],
@@ -27,20 +20,7 @@ const abi = [
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			}
-		],
-		"name": "deleteTask",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_id",
+				"name": "_taskId",
 				"type": "uint256"
 			}
 		],
@@ -56,7 +36,7 @@ const abi = [
 	},
 	{
 		"inputs": [],
-		"name": "getallTasks",
+		"name": "getAllTasks",
 		"outputs": [
 			{
 				"components": [
@@ -108,6 +88,25 @@ const abi = [
 				"internalType": "bool",
 				"name": "completed",
 				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "taskToOwner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",

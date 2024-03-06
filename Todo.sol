@@ -7,29 +7,41 @@ contract Todo {
         user = msg.sender;
     }
     struct Task {
-        uint id;
+        uint256 id;
         string content;
         bool completed;
     }
     Task[] public tasks;
-    
-    modifier onlyOwner() {
-        require(msg.sender == user, "You are not the owner");
+    mapping(uint256 => address) public taskToOwner;
+    modifier onlyOwner(uint256 _taskId) {
+        require(msg.sender == taskToOwner[_taskId]);
         _;
     }
-    function createTask(string memory _content) public onlyOwner {
-        tasks.push(Task(tasks.length, _content, false));
+
+    function createTask(string memory content) public {
+        tasks.push(Task(tasks.length, content, false));
+        taskToOwner[tasks.length] = msg.sender;
     }
-    function toggleCompleted(uint _id) public onlyOwner {
-        tasks[_id].completed = !tasks[_id].completed;
+    function toggleCompleted(uint256 _taskId) public onlyOwner(_taskId) {
+        tasks[_taskId].completed = !tasks[_taskId].completed;
     }
-    function getallTasks() public view returns(Task[] memory) {
+    function getAllTasks() public view returns (Task[] memory) {
+        uint256 length = tasks.length;
+        uint256 count = 0;
+        Task[] memory tasks_ = new Task[](length);
+        for (uint256 i = 0; i < length; i++) {
+            if (taskToOwner[i] == msg.sender) {
+                tasks_[count] = tasks[i];
+                count++;
+            }
+        }
+        Task[] memory tasks__ = new Task[](count);
+        for (uint256 i = 0; i < count; i++) {
+            tasks__[i] = tasks_[i];
+        }
         return tasks;
     }
-    function clearAllTasks() public onlyOwner {
-        delete tasks;
-    }
-    function deleteTask(uint _id) public onlyOwner {
-        delete tasks[_id];
-    }
+
+        
+    
 }
