@@ -1,54 +1,5 @@
-const apiurl = 'https://data-seed-prebsc-1-s1.binance.org:8545';
-const contractAddress = '0xb3f1Bb9B2f05b8181Fe3EeD59c4743a6165e8890';
-const privateKey = 'ade18909943d7066909da3431a8c6361c5ada2c99bd897f6672ae6278691d536';
-
-const abi = [
-	{
-		"inputs": [],
-		"name": "clearCompletedTasks",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_taskId",
-				"type": "uint256"
-			}
-		],
-		"name": "completeTask",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_content",
-				"type": "string"
-			}
-		],
-		"name": "createTask",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_taskId",
-				"type": "uint256"
-			}
-		],
-		"name": "deleteTask",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
+export const contactaddress = '0xf6170AefFf1E6dE2347F39f862376E5b715447FB';
+export const abi = [
 	{
 		"anonymous": false,
 		"inputs": [
@@ -139,6 +90,52 @@ const abi = [
 	},
 	{
 		"inputs": [],
+		"name": "clearCompletedTasks",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_taskId",
+				"type": "uint256"
+			}
+		],
+		"name": "completeTask",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_content",
+				"type": "string"
+			}
+		],
+		"name": "createTask",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_taskId",
+				"type": "uint256"
+			}
+		],
+		"name": "deleteTask",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "getUserTasks",
 		"outputs": [
 			{
@@ -212,4 +209,3 @@ const abi = [
 		"type": "function"
 	}
 ];
-module.exports = {apiurl, contractAddress, privateKey, abi};
