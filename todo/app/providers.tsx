@@ -39,8 +39,8 @@ export const BNBTestnet = {
 const { wallets } = getDefaultWallets();
 
 const config = getDefaultConfig({
-  appName: 'RainbowKit demo',
-  projectId: 'YOUR_PROJECT_ID',
+  appName: 'Web3 ToDo',
+  projectId: '05b6018c91393c11e7d48c012e7af116',
   wallets: [
     ...wallets,
     {

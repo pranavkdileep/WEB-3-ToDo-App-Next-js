@@ -8,26 +8,26 @@ import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
-import { useWriteContract,useWaitForTransactionReceipt,useAccount } from 'wagmi' 
-import {abi,contactaddress} from '../app/abi'
-import { useState,useEffect } from "react"
+import { useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagmi'
+import { abi, contactaddress } from '../app/abi'
+import { useState, useEffect } from "react"
 
-export type Task ={
+export type Task = {
   completed: boolean;
   content: string;
   id: number;
   owner: string;
 };
-type MainTodoProps = {  tasks: Task[]};
+type MainTodoProps = { tasks: Task[] };
 
 export function MainTodo({ tasks }: MainTodoProps) {
-  const account = useAccount(); 
-  const [newtaskcontent,setnewtask] = useState('');
-  const { data: hash, writeContract,isPending } = useWriteContract() ;
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = 
-    useWaitForTransactionReceipt({ 
-      hash, 
-    }) 
+  const account = useAccount();
+  const [newtaskcontent, setnewtask] = useState('');
+  const { data: hash, writeContract, isPending } = useWriteContract();
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+    useWaitForTransactionReceipt({
+      hash,
+    })
   useEffect(
     () => {
       if (isConfirmed) {
@@ -51,12 +51,17 @@ export function MainTodo({ tasks }: MainTodoProps) {
     <div className="dark min-h-screen bg-gray-900 text-gray-200">
       <header className="flex items-center justify-between p-4 border-b border-gray-700">
         <h1 className="text-2xl font-bold">Todo App</h1>
-        <ConnectButton /> 
+        <ConnectButton />
       </header>
       <main className="p-4">
         <form className="flex items-center gap-2 mb-4">
-          <Input className="flex-1" placeholder="Add a new todo..." type="text" onChange={event => {setnewtask(event.target.value)}} />
-          <Button className="bg-gray-300 rounded-md text-black" type="button" onClick={()=>{
+          <Input
+            className="flex-1 dark:text-white text-black"
+            placeholder="Add a new todo..."
+            type="text"
+            onChange={event => { setnewtask(event.target.value) }}
+          />
+          <Button className="bg-gray-300 rounded-md text-black" type="button" onClick={() => {
             writeContract({
               abi,
               address: contactaddress,
@@ -66,41 +71,41 @@ export function MainTodo({ tasks }: MainTodoProps) {
           }}>Add Task</Button>
         </form>
         <ul className="space-y-2">
-  {tasks && tasks.map((task) => (
-    <li key={task.id} className="flex items-center justify-between p-4 bg-gray-800 rounded-md">
-      <div className="flex items-center gap-2">
-        <Checkbox checked={task.completed} onClick={() => {
-          console.log('toggle');
-          handlecompletetask(task.id);
-        }} />
-        <Label>{task.content}</Label>
-      </div>
-      <Button size="icon" variant="ghost" type="button" onClick={()=>{
-        writeContract({
-          abi,
-          address: contactaddress,
-          functionName: 'deleteTask',
-          args: [task.id],
-          account: account.address,
-        })
-      }}>
-        <Trash2Icon className="h-4 w-4" />
-      </Button>
-    </li>
-  ))}
-</ul>
+          {tasks && tasks.map((task) => (
+            <li key={task.id} className="flex items-center justify-between p-4 bg-gray-800 rounded-md">
+              <div className="flex items-center gap-2">
+                <Checkbox checked={task.completed} onClick={() => {
+                  console.log('toggle');
+                  handlecompletetask(task.id);
+                }} />
+                <Label>{task.content}</Label>
+              </div>
+              <Button size="icon" variant="ghost" type="button" onClick={() => {
+                writeContract({
+                  abi,
+                  address: contactaddress,
+                  functionName: 'deleteTask',
+                  args: [task.id],
+                  account: account.address,
+                })
+              }}>
+                <Trash2Icon className="h-4 w-4" />
+              </Button>
+            </li>
+          ))}
+        </ul>
         <div className="mt-4 flex justify-between">
           {isConfirming && (
             <div className="flex items-center gap-2">
-            <LoaderIcon className="animate-spin h-5 w-5 mr-3" />
-            Loading...
-          </div>
+              <LoaderIcon className="animate-spin h-5 w-5 mr-3" />
+              Loading...
+            </div>
           )}
           {isPending && (
             <div className="flex items-center gap-2">
-            <LoaderIcon className="animate-spin h-5 w-5 mr-3" />
-            Approve transaction
-          </div>
+              <LoaderIcon className="animate-spin h-5 w-5 mr-3" />
+              Approve transaction
+            </div>
           )}
           <Button variant="outline" type="button" onClick={() => {
             writeContract({
